@@ -16,6 +16,7 @@
     <input name="displayName" th:value="${displayName}" placeholder="이름">
     <input name="username" th:value="${username}" placeholder="아이디">
     <input name="password" th:value="${password}" placeholder="비밀번호" type="password">
+    <span th:if="${error}" class="error" th:text="${error}"></span><br>
     <button type="submit">전송</button>
 </form>
 

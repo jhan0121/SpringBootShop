@@ -1,4 +1,4 @@
-package com.flinter.shop;
+package com.flinter.shop.item;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

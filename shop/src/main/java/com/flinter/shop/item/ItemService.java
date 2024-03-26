@@ -1,4 +1,4 @@
-package com.flinter.shop;
+package com.flinter.shop.item;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,10 +14,11 @@ public class ItemService {
 
     private final ItemRepository itemRepository;
 
-    public void saveItem(String title, Integer price) {
+    public void saveItem(String title, Integer price, String username) {
         Item item = new Item();
         item.setTitle(title);
         item.setPrice(price);
+        item.setUsername(username);
         itemRepository.save(item);
     }
 
@@ -37,6 +38,13 @@ public class ItemService {
             item.get().setPrice(price);
         } else {
             throw new Exception();
+        }
+    }
+
+    public void deleteItem(Long id) {
+        Optional<Item> item = itemRepository.findById(id);
+        if (item.isPresent()) {
+            itemRepository.delete(item.get());
         }
     }
 }

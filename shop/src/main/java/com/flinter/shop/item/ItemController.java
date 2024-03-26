@@ -1,6 +1,10 @@
-package com.flinter.shop;
+package com.flinter.shop.item;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +37,10 @@ public class ItemController {
                           @RequestParam(name = "price") Integer price,
                           Model model) {
 
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
         if (title.isEmpty() || title.length() > 255) {
             model.addAttribute("error", "제목을 입력하세요.");
             model.addAttribute("title", title);
@@ -47,7 +55,7 @@ public class ItemController {
             return "write";
         }
 
-        itemService.saveItem(title, price);
+        itemService.saveItem(title, price, username);
         return "redirect:/list";
     }
 
@@ -55,9 +63,9 @@ public class ItemController {
     @PostMapping("/add2")
     public String addPost2(@RequestParam Map formData) {
 
-
         itemService.saveItem(formData.get("title").toString(),
-                Integer.parseInt(formData.get("price").toString()));
+                Integer.parseInt(formData.get("price").toString()),
+                formData.get("username").toString());
         return "redirect:/list";
     }
 
@@ -112,6 +120,20 @@ public class ItemController {
         }
 
         itemService.updateItem(id, title, price);
+        return "redirect:/list";
+    }
+
+    @DeleteMapping("/item")
+    public ResponseEntity<String> deleteItem(@RequestParam Long id) {
+
+        itemService.deleteItem(id);
+        return ResponseEntity.status(200).body("삭제완료");
+    }
+
+    @GetMapping("/test2")
+    public String test2() {
+        String aaaaa = new BCryptPasswordEncoder().encode("aaaaa");
+        System.out.println("aaaaa = " + aaaaa);
         return "redirect:/list";
     }
 }

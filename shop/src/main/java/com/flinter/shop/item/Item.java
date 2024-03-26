@@ -1,4 +1,4 @@
-package com.flinter.shop;
+package com.flinter.shop.item;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -16,4 +16,5 @@ public class Item {
     private Long id;
     private String title;
     private Integer price;
+    private String username;
 }
