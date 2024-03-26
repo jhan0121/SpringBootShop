@@ -1,2 +1,2 @@
 # SpringBootShop
-Shipping Mall Project for studying SpringBoot and JPA
+Shopping Mall Project for studying SpringBoot and JPA
